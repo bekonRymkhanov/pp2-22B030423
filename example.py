@@ -1,2 +1,2 @@
-a="hello"
-print(a[-1])
+a=1+4j
+print(type(a))
