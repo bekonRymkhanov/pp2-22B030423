@@ -1,2 +1,3 @@
-a=1+4j
-print(type(a))
+x=16
+x>>=3
+print(x)
