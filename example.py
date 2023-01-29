@@ -1,6 +1,5 @@
 correct=0
 num_of_q=0
-
 exam={}
 while True:
     question=input("question:")
