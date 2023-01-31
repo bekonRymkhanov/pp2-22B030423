@@ -1,6 +1,7 @@
 correct=0
 num_of_q=0
 exam={}
+print("hello")
 while True:
     question=input("question:")
     ans=input("answer of question:")
