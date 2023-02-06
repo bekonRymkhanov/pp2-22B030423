@@ -1,4 +1,6 @@
 x = 234245
-y = "hell o"
+y = "hello"
 print(x)
+print(type(x))
 print(y)
+print(type(y))
