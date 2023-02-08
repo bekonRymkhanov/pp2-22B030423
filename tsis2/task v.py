@@ -1,3 +1,8 @@
-thistuple = (1,2,3,4,5,6,7,8,9)
-for x in thistuple:
-    print(x,end=" ")
+my_tuple = tuple(input("write thomthing:"))
+chracters = dict()
+for i in my_tuple:
+    chracters[i]=my_tuple.count(i)
+for i,j in chracters.items():
+    if i==' ':
+        i="space"
+    print(f"{i} character is repeated {j} times")
