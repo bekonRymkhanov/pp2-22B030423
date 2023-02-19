@@ -1,5 +1,7 @@
-from datetime import datetime
-x=datetime.now()
-print(x.strftime("%Y-%m"),x.day+1,sep="-")
-print(x.strftime("%Y-%m-%d"))
-print(x.strftime("%Y-%m"),x.day-1,sep="-")
+import datetime
+x=datetime.datetime.now()
+yesterday=x+datetime.timedelta(-1)
+today=x
+tommorow=x+datetime.timedelta(1)
+print(yesterday,today,tommorow,sep="\n")
+
