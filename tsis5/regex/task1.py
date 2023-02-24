@@ -1,4 +1,4 @@
 import re
-with open ('row.txt','r') as f:
-    file=f.read()
-print(file)
+with open ('row.txt',mode='r') as f:
+    
+    print(f.read())
