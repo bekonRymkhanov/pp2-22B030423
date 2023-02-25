@@ -1,5 +1,7 @@
 import re
 with open (file='row.txt',mode='r',encoding='utf8') as f:
-    fil = f.read()
+    rowtxt = f.read()
 patt='a[b]*'
-print(re.search(patt,fil)[0])
+text='egt sgt etg ad abbbbbbbbb ab egegeg egergeg efefaf etgrthrth'
+print(re.findall(patt,text))
+print(re.findall(patt,rowtxt))
