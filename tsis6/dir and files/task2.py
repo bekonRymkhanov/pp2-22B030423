@@ -15,8 +15,8 @@ try:
     except:
         print("not readable")
     try:
-        g=open(path,'w')
-        g.write(" ")
+        h=open(path,'w')
+        h.write(" ")
         print("writable")
     except:
         print("not writable")
