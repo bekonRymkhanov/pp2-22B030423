@@ -1,5 +1,4 @@
-print(ord("z"))
+import os
 for i in range(97,122):
-   name=chr(i)+"txt"
-   with open(name,'w') as file:
-      file.write("")
+   name=chr(i)+".txt"
+   os.remove(name)
