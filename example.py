@@ -1,39 +1,45 @@
 import pygame
 pygame.init()
-Height,Width,Radius=800, 500,100
+runned=True
+Height,Width=800,500
+x,y=50,50
+dx,dy=0,0
+Delta=30
+clock=pygame.time.Clock()
 screen=pygame.display.set_mode((Height,Width))
-pygame.display.set_caption('hello NIGGERS')
-runprog=True
-while runprog:
+pygame.display.set_caption("Katarinai,nemurinai,Toroimenoai,anatano")
+while runned:
     screen.fill((255,255,255))
-    pygame.draw.line(
-        (screen),
-        (255,0,0),
-        (0,0),
-        (Height,Width),
-        5)
-    pygame.draw.line(
-        (screen),
-        (255,0,0),
-        (Height,0),
-        (0,Width),
-        5)
-    pygame.draw.rect(
-        screen,
-        (122,122,122),
-        pygame.Rect(Height/2-Radius,Width/2-Radius,200,200),
-        0)
-    pygame.draw.circle(
-        screen,
-        (0,0,0),
-        (Height/2,Width/2),
-        Radius,)
-    pygame.draw.polygon(
-        screen,
-        (0,0,0),
-        [(Height/2-Radius,Width/2-Radius),(Height/2+Radius,Width/2-Radius),(Height/2,(Width/2-Radius)/2)],
-        0)
+    pygame.draw.rect(screen,(255,0,0),pygame.Rect(x,y,50,50),0,20)
+    pressed=pygame.key.get_pressed()
+    if pressed[pygame.K_UP]:
+        dx=0
+        dy=-Delta
+    else:
+        dx=0
+        dy=0
+    if pressed[pygame.K_DOWN]:
+        dx=0
+        dy=Delta
+    else:
+        dx=0
+        dy=0
+    if pressed[pygame.K_LEFT]:
+        dx=-Delta
+        dy=0
+    else:
+        dx=0
+        dy=0
+    if pressed[pygame.K_RIGHT]:
+        dx=Delta
+        dy=0
+    else:
+        dx=0
+        dy=0
+    x=x+dx
+    y=y+dy
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            runprog=False
+            runned=False
     pygame.display.flip()
+    clock.tick(30)
