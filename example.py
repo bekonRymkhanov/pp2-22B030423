@@ -3,7 +3,6 @@ pygame.init()
 runned=True
 Height,Width=800,500
 x,y=50,50
-dx,dy=0,0
 Delta=30
 clock=pygame.time.Clock()
 screen=pygame.display.set_mode((Height,Width))
@@ -13,33 +12,15 @@ while runned:
     pygame.draw.rect(screen,(255,0,0),pygame.Rect(x,y,50,50),0,20)
     pressed=pygame.key.get_pressed()
     if pressed[pygame.K_UP]:
-        dx=0
-        dy=-Delta
-    else:
-        dx=0
-        dy=0
+        y-=Delta
     if pressed[pygame.K_DOWN]:
-        dx=0
-        dy=Delta
-    else:
-        dx=0
-        dy=0
+        y+=Delta
     if pressed[pygame.K_LEFT]:
-        dx=-Delta
-        dy=0
-    else:
-        dx=0
-        dy=0
+        x-=Delta
     if pressed[pygame.K_RIGHT]:
-        dx=Delta
-        dy=0
-    else:
-        dx=0
-        dy=0
-    x=x+dx
-    y=y+dy
+        x+=Delta
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             runned=False
     pygame.display.flip()
-    clock.tick(30)
+    clock.tick(10)
