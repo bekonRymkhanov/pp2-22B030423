@@ -1,26 +1,8 @@
 import pygame
 import math
 import datetime
-pygame.init()
-
-clock=pygame.time.Clock()
-
-screen=pygame.display.set_mode((700,500))
-pygame.display.set_caption("mickey mouse clock")
-
-image=pygame.image.load("mickeyall.jpg")
-resizedimage=pygame.transform.scale(image,(700,500))
-
-image1=pygame.image.load("hands.png")
-resizedimage1=pygame.transform.scale(image1,(220,15))
-
-image2=pygame.image.load("hands.png")
-resizedimage2=pygame.transform.scale(image2,(220,30))
-runned=True
-x,y,x2,y2=0,0,0,0
-while runned:
-    a=-270+datetime.datetime.now().second*-6
-    b=-270+datetime.datetime.now().minute*-6
+def hell(a):
+    x,y=0,0
     if abs(a)>360:
         a+=360
     if abs(a)<=90:
@@ -35,32 +17,50 @@ while runned:
     elif abs(a)<=360 and abs(a)>=270:
         deg=(a-270)/57.2958
         y-=math.cos(deg)*220
+    return x,y
+pygame.init()
 
+clock=pygame.time.Clock()
+height,width=500,500
+screen=pygame.display.set_mode((height,width))
+pygame.display.set_caption("mickey mouse clock")
 
-    if abs(b)>360:
-        b+=360
-    if abs(b)<=90:
-        pass
-    elif abs(b)>90 and abs(b)<=180:
-        deg=(b-90)/57.2958
-        x2+=math.sin(deg)*220
-    elif abs(b)<=270 and abs(b)>=180:
-        deg=(b-180)/57.2958
-        y2-=math.sin(deg)*220
-        x2+=math.cos(deg)*220
-    elif abs(b)<=360 and abs(b)>=270:
-        deg=(b-270)/57.2958
-        y2-=math.cos(deg)*220
+image=pygame.image.load("better.png")
+reimage=pygame.transform.scale(image,(height+25,width))
+
+secondhands=pygame.image.load("hands.png")
+resecondhands=pygame.transform.scale(secondhands,(220,10))
+
+minutehands=pygame.image.load("hands.png")
+reminutehands=pygame.transform.scale(minutehands,(220,20))
+
+hourhands=pygame.image.load("hands.png")
+rehourhands=pygame.transform.scale(hourhands,(220,30))
+runned=True
+
+while runned:
+    hours=datetime.datetime.now().hour
+    if hours>12:
+        hours-=12
+
+    a=-270+datetime.datetime.now().second*-6
+    b=-270+datetime.datetime.now().minute*-6
+    c=-270+hours*-30
 
     screen.fill((255,255,255))
-    screen.blit(resizedimage,(0,0))
-    rotatedimage=pygame.transform.rotate(resizedimage1,a)
-    screen.blit(rotatedimage,(330-x,235-y))
-    rotatedimage1=pygame.transform.rotate(resizedimage2,b)
-    screen.blit(rotatedimage1,(330-x2,235-y2))
+
+    screen.blit(reimage,(0,0))
+
+    rotatedimage=pygame.transform.rotate(resecondhands,a)
+    screen.blit(rotatedimage,(height/2-hell(a)[0],width/2-hell(a)[1]-5))
+
+    rotatedsecondhands=pygame.transform.rotate(reminutehands,b)
+    screen.blit(rotatedsecondhands,(height/2-hell(b)[0],width/2-hell(b)[1]-10))
+
+    rotatedminutehands=pygame.transform.rotate(rehourhands,c)
+    screen.blit(rotatedminutehands,(height/2-hell(c)[0],width/2-hell(c)[1]-15))
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             runned=False
     pygame.display.flip()
-    x,y,y2,x2=0,0,0,0
     clock.tick(20)
