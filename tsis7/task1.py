@@ -26,17 +26,17 @@ font,font1,font2=220,220,125
 screen=pygame.display.set_mode((height,width))
 pygame.display.set_caption("mickey mouse clock")
 
-image=pygame.image.load("better.png")
+image=pygame.image.load("C:/Users/User/Desktop/python/images/better.png")
 reimage=pygame.transform.scale(image,(height+25,width))
 
-secondhands=pygame.image.load("hands.png")
-resecondhands=pygame.transform.scale(secondhands,(font,10))
+hands=pygame.image.load("C:/Users/User/Desktop/python/images/hands.png")
 
-minutehands=pygame.image.load("hands.png")
-reminutehands=pygame.transform.scale(minutehands,(font1,20))
+resecondhands=pygame.transform.scale(hands,(font,10))
 
-hourhands=pygame.image.load("hands.png")
-rehourhands=pygame.transform.scale(hourhands,(font2,30))
+reminutehands=pygame.transform.scale(hands,(font1,20))
+
+rehourhands=pygame.transform.scale(hands,(font2,30))
+
 runned=True
 
 while runned:

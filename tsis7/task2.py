@@ -14,7 +14,7 @@ for path,dirs,files in listofmusic:
 
 
 screen=pygame.display.set_mode((500,500))
-image=pygame.image.load("playerinterface.jpg")
+image=pygame.image.load("C:/Users/User/Desktop/python/images/playerinterface.jpg")
 reimage=pygame.transform.scale(image,(500,500))
 runned,i,playing,lefted=True,0,1,False
 clock=pygame.time.Clock()
