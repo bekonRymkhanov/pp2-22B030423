@@ -30,11 +30,8 @@ image=pygame.image.load("C:/Users/User/Desktop/python/images/better.png")
 reimage=pygame.transform.scale(image,(height+25,width))
 
 hands=pygame.image.load("C:/Users/User/Desktop/python/images/hands.png")
-
 resecondhands=pygame.transform.scale(hands,(font,10))
-
 reminutehands=pygame.transform.scale(hands,(font1,20))
-
 rehourhands=pygame.transform.scale(hands,(font2,30))
 
 runned=True
