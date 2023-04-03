@@ -1,29 +1,31 @@
 import pygame
 import random
 pygame.init()
+#function that draws lines
 def drawlines(screen,HEIGHT,WIDTH,block):
     for i in range (0,HEIGHT+block,block):
         pygame.draw.line(screen,(255,255,255),(i,0),(i,WIDTH),1)
     for i in range (0,WIDTH+block,block):
         pygame.draw.line(screen,(255,255,255),(0,i),(HEIGHT,i),1)
-class Point:
+
+class Point:  #function that allows us to initialize that in list we have not tuple,we have something that can be taken out by smth.x and smth.y
     def __init__(self,x,y):
         self.x=x
         self.y=y
 
-class Snake:
-    snakebody=[]
+class Snake:  
+    snakebody=[] 
     def __init__(self):
-        self.snakebody=[(Point(x=HEIGHT//2//BLOCK,y=WIDTH//2//BLOCK))]
+        self.snakebody=[(Point(x=HEIGHT//2//BLOCK,y=WIDTH//2//BLOCK))] #initialize start position
 
     def draw(self):
-        head=self.snakebody[0]
-        pygame.draw.rect(SCREEN,(0,255,0),pygame.Rect(head.x*BLOCK,head.y*BLOCK,BLOCK,BLOCK))
-        for body in self.snakebody[1:]:
+        head=self.snakebody[0] #first block in list is head
+        pygame.draw.rect(SCREEN,(0,255,0),pygame.Rect(head.x*BLOCK,head.y*BLOCK,BLOCK,BLOCK)) #draw
+        for body in self.snakebody[1:]: #draw body,but start not from 0 ,start from 1
             pygame.draw.rect(SCREEN,(0,200,100),pygame.Rect(body.x*BLOCK,body.y*BLOCK,BLOCK,BLOCK))
 
     def move(self,dx,dy):
-        for inx in range(len(self.snakebody)-1,0,-1):
+        for inx in range(len(self.snakebody)-1,0,-1):# change cordinates to the
             self.snakebody[inx].x=self.snakebody[inx-1].x
             self.snakebody[inx].y=self.snakebody[inx-1].y
         self.snakebody[0].x+=dx
