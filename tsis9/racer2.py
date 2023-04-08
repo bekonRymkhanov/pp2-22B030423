@@ -2,7 +2,6 @@ import random
 import pygame
 import time
 from pygame.locals import *
-import sys
 pygame.init()
 
 #colors
@@ -24,7 +23,6 @@ display.fill(col_WH)
 # setting up the FPS
 FPS = 60
 clock = pygame.time.Clock()
-own_Speed = 5
 
 # loading the images of the cars
 car_Enemy = pygame.image.load('C:/Users/User/Desktop/python/images/redcar.png')
@@ -33,21 +31,29 @@ bg = pygame.image.load("C:/Users/User/Desktop/python/images/AnimatedStreet.png")
 
 #fonts
 font = pygame.font.SysFont("Verdana", 60)
-font_small = pygame.font.SysFont("Verdana", 20)
+font_small = pygame.font.SysFont("Verdana", 40)
 game_over = font.render("Game Over", True, col_BLACK)
 
 class coin_generation(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.img = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/coin.png'), (40,40))
+        self.weight = random.randint(1,3)
+        self.img = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/coin.png'), (60//self.weight,60//self.weight))
         self.rect = self.img.get_rect()
         self.rect.center = (random.randint(150, display_width-150), random.randint(150, display_height-60))
+
+        
 
     def check(self):
         pass
 
     def nextCoin(self):
         self.rect.center = (random.randint(150, display_width-200), random.randint(150, display_height-60))
+        self.weight = random.randint(1,3)
+        self.img = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/coin.png'), (60//self.weight,60//self.weight))
+        self.rect = self.img.get_rect()
+        self.rect.center = (random.randint(150, display_width-150), random.randint(150, display_height-60))
+
     def render(self, surface):
         surface.blit(self.img, self.rect)
 
@@ -57,6 +63,7 @@ class ownMovement(pygame.sprite.Sprite):
         self.car = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/redcar.png'), (20, 50))
         self.rect = self.car.get_rect()
         self.rect.center = (600, 600)
+        self.own_speed=5
 
     def check(self):
         pass
@@ -88,7 +95,7 @@ class enemyMovement(pygame.sprite.Sprite):
         def check(self):
             pass
         def move(self):
-            self.rect.move_ip(0, own_Speed)
+            self.rect.move_ip(0, current_Own.own_speed)
             if(self.rect.bottom>display_width):
                 self.rect.top = 0
                 self.rect.center = (random.randint(138, display_width-138),0)
@@ -98,7 +105,6 @@ class enemyMovement(pygame.sprite.Sprite):
 current_Own = ownMovement()
 current_Enemy = enemyMovement()
 current_Coin = coin_generation()
-
 sprite_Coin = pygame.sprite.Group()
 sprite_Coin.add(current_Coin)
 sprite_Enemy = pygame.sprite.Group()
@@ -117,16 +123,18 @@ pygame.time.set_timer(INC_SPEED, 1000)
 while running:
     for event in pygame.event.get():
         if event.type == INC_SPEED:
-            if own_Speed > 5:
+            if current_Own.own_speed > 5:
                 pass
             else:
-                own_Speed += 2
+                current_Own.own_speed += 2
         if event.type==QUIT:
             running=False
 
     display.blit(bg, (0, 0))
     scores = font_small.render(str(coins), True, col_BLACK)
-    display.blit(scores, (840-24, 10))
+    scores_collected = font_small.render(str(collected), True, col_BLACK)
+    display.blit(scores, (840-60, 10))
+    display.blit(scores_collected, (100, 10))
     # Moves and Re-draws all Sprites
     for entity in sprite_All:
         display.blit(entity.car, entity.rect)
@@ -137,9 +145,10 @@ while running:
 
 
     if pygame.sprite.spritecollideany(current_Own, sprite_Coin):
+        coins+=current_Coin.weight
+        collected+=1
         current_Coin.nextCoin()
-        coins+=1
-
+        current_Own.own_speed = (collected//5)+5
     # To be run if collision occurs between Player and Enemy
     if pygame.sprite.spritecollideany(current_Own, sprite_Enemy):
         pygame.mixer.Sound('C:/Users/User/Desktop/python/music/crash.mp3').play()
@@ -150,7 +159,7 @@ while running:
 
         for entity in sprite_All:
             entity.kill()
-        time.sleep(2)
+        time.sleep(3)
         running=False
     pygame.display.update()
     clock.tick(FPS)

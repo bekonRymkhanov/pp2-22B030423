@@ -1,4 +1,5 @@
 import pygame
+import datetime
 import random
 pygame.init()
 #function that draws lines
@@ -12,6 +13,7 @@ class Point:  #function that allows us to initialize that in list we have not tu
     def __init__(self,x,y):
         self.x=x
         self.y=y
+
 
 class Snake:  
     snakebody=[] 
@@ -43,14 +45,37 @@ class Snake:
         if foodx==self.snakebody[0].x and foody==self.snakebody[0].y:
             return True
         return False
-    
+def timer_food():
+    timer = int(datetime.datetime.now().second) + 3
+    if timer>=60:
+        timer-=60 
+    return timer
+
 class Food: #food.
     def __init__(self):
         self.x=random.randint(0,HEIGHT//BLOCK-1)
         self.y=random.randint(0,WIDTH//BLOCK-1)
-
+        self.weight=random.randint(1,3)
+        self.color=(0,0,0)
+        self.timer = timer_food()
     def draw(self):
-        pygame.draw.circle(SCREEN,(200,0,0),(self.x*BLOCK+BLOCK//2,self.y*BLOCK+BLOCK//2),BLOCK//2)
+        if self.weight==1:
+            self.color=(102,204,0)
+        elif self.weight==2:
+            self.color=(255,255,0)
+        else:
+            self.color=(255,0,0)
+        for checking_walls in walls.wall_list:
+            if food.x==checking_walls.x and food.y==checking_walls.y:
+                self.x=random.randint(0,HEIGHT//BLOCK-1)
+                self.y=random.randint(0,WIDTH//BLOCK-1)
+        pygame.draw.circle(SCREEN,self.color,(self.x*BLOCK+BLOCK//2,self.y*BLOCK+BLOCK//2),BLOCK//2)
+    def collision(self):
+        for i in range(len(walls.wall_list)):
+            for j in range(len(snake.snakebody)):
+                if (snake.snakebody[j].x==food.x and snake.snakebody[j].y==food.y)or (walls.wall_list[i].x==food.x or walls.wall_list[i].y==food.y):
+                    return True
+        return False
 
 class Walls:
     def __init__(self) -> None:
@@ -76,6 +101,8 @@ food=Food()
 walls=Walls()
 while runned:
     SCREEN.fill((0,0,0))
+
+
     drawlines(SCREEN,HEIGHT,WIDTH,BLOCK)
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -90,32 +117,47 @@ while runned:
             elif event.key==pygame.K_DOWN:
                 dx,dy=0,1
     snake.move(dx,dy)
-    food.draw()
+
+
     for i in range(1,len(snake.snakebody)):
         if snake.collision(snake.snakebody[i].x,snake.snakebody[i].y):
             runned=False
+    if datetime.datetime.now().second==food.timer:
+        food.x=random.randint(0,HEIGHT//BLOCK-1)
+        food.y=random.randint(0,WIDTH//BLOCK-1)
+        food.weight=random.randint(1,3)
+        if food.collision():
+            food.x=random.randint(0,HEIGHT//BLOCK-1)
+            food.y=random.randint(0,WIDTH//BLOCK-1)
+            food.timer=timer_food()
+
+    food.draw()
     snake.draw()
     walls.draw()
     level_see=all_font.render(f"level: {level}",True,(255,255,255))
     score_see=all_font.render(f"score: {len(snake.snakebody)}",True,(255,255,255))
     SCREEN.blit(level_see,(0,0))
     SCREEN.blit(score_see,(HEIGHT-150,0))
+
     if snake.collision(food.x,food.y):
-        snake.snakebody.append(Point(food.x,food.y))
+        for weight in range(food.weight):
+            snake.snakebody.append(Point(food.x,food.y))
         food.x=random.randint(0,HEIGHT//BLOCK-1)
         food.y=random.randint(0,WIDTH//BLOCK-1)
-        for i in range(len(walls.wall_list)):
-            for j in range(len(snake.snakebody)):
-                if (snake.snakebody[j].x==food.x and snake.snakebody[j].y==food.y)or (walls.wall_list[i].x==food.x or walls.wall_list[i].y==food.y):
-                    food.x=random.randint(0,HEIGHT//BLOCK-1)
-                    food.y=random.randint(0,WIDTH//BLOCK-1)
+        food.weight=random.randint(1,3)
+        food.timer=timer_food()
+        if food.collision():
+            food.x=random.randint(0,HEIGHT//BLOCK-1)
+            food.y=random.randint(0,WIDTH//BLOCK-1)
+
     for i in range(len(walls.wall_list)):
         if snake.collision(walls.wall_list[i].x,walls.wall_list[i].y):
             runned=False
+
     if len(snake.snakebody)%5==0 and saved_lenght!=len(snake.snakebody):
         x+=1
         saved_lenght=len(snake.snakebody)
         level+=1
-    
+
     pygame.display.flip()
     clock.tick(x)

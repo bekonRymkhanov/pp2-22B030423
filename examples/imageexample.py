@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 screen=pygame.display.set_mode((1366,740))
 pygame.display.set_caption("hello")
-image=pygame.image.load('YELAN.png')
+image=pygame.image.load('C:/Users/User/Desktop/python/images/YELAN.png')
 resizedimage=pygame.transform.scale(image,(708,370))
 clock=pygame.time.Clock()
 running=True

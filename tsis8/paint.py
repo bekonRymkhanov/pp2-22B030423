@@ -27,7 +27,7 @@ while running:
                 pygame.draw.circle(SCREEN,mode,(start_pointsx,start_pointsy),((start_pointsx-x)**2+(start_pointsy-y)**2)**0.5,font)
                 started=False
             if started and shape==2:
-                pygame.draw.rect(SCREEN,mode,pygame.Rect(start_pointsx,start_pointsy,abs(start_pointsx-x),abs(start_pointsy-y)),font)
+                pygame.draw.rect(SCREEN,mode,pygame.Rect(min(start_pointsx,x),min(y,start_pointsy),abs(start_pointsx-x),abs(start_pointsy-y)),font)
                 started=False
                 
         if event.type==pygame.KEYDOWN:
@@ -60,9 +60,9 @@ while running:
 
         x=pygame.mouse.get_pos()[0]
         y=pygame.mouse.get_pos()[1]
-
         if pressed and shape==0:
             pygame.draw.line(SCREEN,mode,(x,y),(x2,y2),font)
+            #pygame.draw.circle(SCREEN,mode,(x,y),font,0)
             x2=x
             y2=y
         elif pressed and not started and (shape==1 or shape==2):
