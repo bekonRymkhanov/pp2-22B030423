@@ -414,7 +414,7 @@ def main():
     draw_color=WHITE
     game_object = GameObject()
     active_obj = game_object
-    current_shape = EquilateralTriangle # current_shape()
+    current_shape = Pen # current_shape()
     button_pen=ButtonPen()
     button_eraser = ButtonEraser()
     button_rect = ButtonRect()
