@@ -60,7 +60,7 @@ class coin_generation(pygame.sprite.Sprite):
 class ownMovement(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.car = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/redcar.png'), (20, 50))
+        self.car = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/redcar.png'), (50,70))
         self.rect = self.car.get_rect()
         self.rect.center = (600, 600)
         self.own_speed=5

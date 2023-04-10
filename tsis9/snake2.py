@@ -78,7 +78,7 @@ class Food: #food.
         return False
 
 class Walls:
-    def __init__(self) -> None:
+    def __init__(self):
         self.x=0
         self.y=0
         self.wall_list=[Point(x=0,y=0)]
