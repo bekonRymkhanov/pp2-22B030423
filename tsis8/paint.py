@@ -69,4 +69,6 @@ while running:
             start_pointsx=x
             start_pointsy=y
             started=True
+    pygame.draw.polygon(SCREEN,(255,0,0),[(100,300),(115,231),(284, )],5)
+
     pygame.display.flip()

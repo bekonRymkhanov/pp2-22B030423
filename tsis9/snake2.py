@@ -15,7 +15,7 @@ class Point:  #function that allows us to initialize that in list we have not tu
         self.y=y
 
 
-class Snake:  
+class Snake:  #snake class
     snakebody=[] 
     def __init__(self):
         self.snakebody=[(Point(x=HEIGHT//2//BLOCK,y=WIDTH//2//BLOCK))] #initialize start position
@@ -91,7 +91,6 @@ runned=True
 WIDTH,HEIGHT,BLOCK=700,700,50
 clock=pygame.time.Clock()
 dx,dy=0,0
-x=5
 level=1
 saved_lenght=0
 SCREEN=pygame.display.set_mode((HEIGHT,WIDTH))
@@ -103,8 +102,8 @@ while runned:
     SCREEN.fill((0,0,0))
 
 
-    drawlines(SCREEN,HEIGHT,WIDTH,BLOCK)
-    for event in pygame.event.get():
+    drawlines(SCREEN,HEIGHT,WIDTH,BLOCK)#draw grid
+    for event in pygame.event.get():#check quit event and buttons to control
         if event.type==pygame.QUIT:
             runned=False
         if event.type==pygame.KEYDOWN:
@@ -116,29 +115,33 @@ while runned:
                 dx,dy=-1,0
             elif event.key==pygame.K_DOWN:
                 dx,dy=0,1
+    #give dx dy to snake class
     snake.move(dx,dy)
 
 
-    for i in range(1,len(snake.snakebody)):
+    for i in range(1,len(snake.snakebody)):#check collision with itself
         if snake.collision(snake.snakebody[i].x,snake.snakebody[i].y):
             runned=False
-    if datetime.datetime.now().second==food.timer:
+    if datetime.datetime.now().second==food.timer:#timer to food
         food.x=random.randint(0,HEIGHT//BLOCK-1)
         food.y=random.randint(0,WIDTH//BLOCK-1)
         food.weight=random.randint(1,3)
-        if food.collision():
+        if food.collision():#check collision food with walls and snakebody
             food.x=random.randint(0,HEIGHT//BLOCK-1)
             food.y=random.randint(0,WIDTH//BLOCK-1)
             food.timer=timer_food()
-
+    #draw all
     food.draw()
     snake.draw()
     walls.draw()
+    #score fonts and display
+    level=len(snake.snakebody)//5+1
+    x=5+level/2
     level_see=all_font.render(f"level: {level}",True,(255,255,255))
     score_see=all_font.render(f"score: {len(snake.snakebody)}",True,(255,255,255))
     SCREEN.blit(level_see,(0,0))
     SCREEN.blit(score_see,(HEIGHT-150,0))
-
+    #check collision of snake with food
     if snake.collision(food.x,food.y):
         for weight in range(food.weight):
             snake.snakebody.append(Point(food.x,food.y))
@@ -150,14 +153,9 @@ while runned:
             food.x=random.randint(0,HEIGHT//BLOCK-1)
             food.y=random.randint(0,WIDTH//BLOCK-1)
 
-    for i in range(len(walls.wall_list)):
+    for i in range(len(walls.wall_list)):#check collision with walls and snakehead
         if snake.collision(walls.wall_list[i].x,walls.wall_list[i].y):
             runned=False
-
-    if len(snake.snakebody)%5==0 and saved_lenght!=len(snake.snakebody):
-        x+=1
-        saved_lenght=len(snake.snakebody)
-        level+=1
-
+    
     pygame.display.flip()
     clock.tick(x)

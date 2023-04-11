@@ -1,13 +1,17 @@
 import pygame
 import math
+
 pygame.init()
+
 clock = pygame.time.Clock()
-WIDTH, HEIGHT = 800, 700
+WIDTH, HEIGHT = 800, 700 #width and height
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-BLACK = pygame.Color(0, 0, 0)
+
+#colors
+BLACK = pygame.Color(0, 0, 0) 
 WHITE = pygame.Color(255, 255, 255)
 
-def FindVerticesOfEquilateralTriangle(x0,y0,x,y):
+def FindVerticesOfEquilateralTriangle(x0,y0,x,y): #it will help us when we draw equileiteral triangle
 
     # Calculate the angle between the center and vertex
     theta1 = math.atan2(y - y0, x - x0)
@@ -26,23 +30,25 @@ def FindVerticesOfEquilateralTriangle(x0,y0,x,y):
     return [(x, y), (x1, y1), (x2, y2)]
 
 
-class Point:
+class Point: #creating point class,so we can use it to change tuple to iterable object 
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
 
-class GameObject:
+class GameObject: #mother class for all classes whith draw function and update function  
     def draw(self):
         return
 
     def update(self, current_pos):
         return
 
-class ButtonPen(GameObject):
+class ButtonPen(GameObject):   #pen button drawing
     def __init__(self):
         self.size = 40
+        #upload image
         self.pen = pygame.transform.scale(pygame.image.load("C:/Users/User/Desktop/python/images/penbuttonimages.png"),(40,40))
+        # drawing its sprite
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -55,6 +61,7 @@ class ButtonPen(GameObject):
         )
 
     def draw(self):
+        #draw button
         SCREEN.blit(self.pen,(WIDTH // 2 - 150 - self.size // 2,20))
 
     def update(self, current_pos):
@@ -62,10 +69,12 @@ class ButtonPen(GameObject):
 
 
 
-class ButtonRightTriangle(GameObject):
+class ButtonRightTriangle(GameObject): # button of right triangle
     def __init__(self):
         self.size = 40
+        #upload image
         self.pen = pygame.transform.scale(pygame.image.load("C:/Users/User/Desktop/python/images/righttriangle.png"),(40,40))
+        # drawing its sprite
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -77,7 +86,7 @@ class ButtonRightTriangle(GameObject):
             )
         )
 
-    def draw(self):
+    def draw(self): # draw button
         SCREEN.blit(self.pen,(WIDTH // 2 +80 - self.size // 2,20))
 
     def update(self, current_pos):
@@ -85,10 +94,12 @@ class ButtonRightTriangle(GameObject):
 
 
 
-class ButtonEraser(GameObject):
+class ButtonEraser(GameObject): #button of eraser
     def __init__(self):
         self.size = 40
+        #upload image
         self.pen = pygame.transform.scale(pygame.image.load("C:/Users/User/Desktop/python/images/eraserbutton.png"),(40,40))
+        # drawing its sprite
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -101,15 +112,18 @@ class ButtonEraser(GameObject):
         )
 
     def draw(self):
+        #draw button
         SCREEN.blit(self.pen,(WIDTH // 2 - 100 - self.size // 2,20))
 
     def update(self, current_pos):
         pass
 
-class ButtonRombus(GameObject):
+class ButtonRombus(GameObject): # button of rombus
     def __init__(self):
         self.size = 40
+        #upload image
         self.pen = pygame.transform.scale(pygame.image.load("C:/Users/User/Desktop/python/images/rombus.png"),(40,40))
+        # drawing its sprite    
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -122,16 +136,19 @@ class ButtonRombus(GameObject):
         )
 
     def draw(self):
+        #draw button
         SCREEN.blit(self.pen,(WIDTH // 2 +130- self.size // 2,20))
 
     def update(self, current_pos):
         pass
 
 
-class ButtonEquileiteral(GameObject):
+class ButtonEquileiteral(GameObject): #button of equileiteral.
     def __init__(self):
         self.size = 40
+        #upload image
         self.pen = pygame.transform.scale(pygame.image.load("C:/Users/User/Desktop/python/images/equileiteral.png"),(40,40))
+        # drawing its sprite       
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -144,6 +161,7 @@ class ButtonEquileiteral(GameObject):
         )
 
     def draw(self):
+        #draw button
         SCREEN.blit(self.pen,(WIDTH // 2 +190- self.size // 2,20))
 
     def update(self, current_pos):
@@ -151,9 +169,10 @@ class ButtonEquileiteral(GameObject):
 
 
 
-class ButtonRect(GameObject):
+class ButtonRect(GameObject): # button of rectangle
     def __init__(self):
         self.size = 40
+        # drawing its sprite
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -165,7 +184,7 @@ class ButtonRect(GameObject):
             )
         )
 
-    def draw(self):
+    def draw(self): # draw button
         pygame.draw.rect(
             SCREEN,
             (255, 255, 255),
@@ -181,9 +200,10 @@ class ButtonRect(GameObject):
         pass
 
 
-class ButtonCube(GameObject):
+class ButtonCube(GameObject): # button of cube
     def __init__(self):
         self.size = 40
+        # drawing its sprite
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -195,7 +215,7 @@ class ButtonCube(GameObject):
             )
         )
 
-    def draw(self):
+    def draw(self): # draw button
         pygame.draw.rect(
             SCREEN,
             (255, 255, 255),
@@ -211,9 +231,10 @@ class ButtonCube(GameObject):
         pass
 
 
-class ButtonCircle(GameObject):
+class ButtonCircle(GameObject): # button of circle
     def __init__(self):
         self.size = 40
+        # drawing its sprite
         self.rect = pygame.draw.rect(
             SCREEN,
             (0, 0, 0),
@@ -225,7 +246,7 @@ class ButtonCircle(GameObject):
             )
         )
 
-    def draw(self):
+    def draw(self): # draw button
         pygame.draw.rect(
             SCREEN,
             (255, 255, 255),
@@ -246,14 +267,14 @@ class ButtonCircle(GameObject):
 
 class Pen(GameObject):
     def __init__(self,draw_font,draw_color,*args, **kwargs):
-        self.points: list[Point] = [] 
+        self.points: list[Point] = [] #list of cordinates
         self.draw_font=draw_font
         self.draw_color=draw_color
 
     def draw(self):
-        for idx, point in enumerate(self.points[:-1]):
+        for idx, point in enumerate(self.points[:-1]):#chanel each points whith each other
             next_point = self.points[idx + 1]
-            pygame.draw.line(
+            pygame.draw.line(     #draw
                 SCREEN,
                 self.draw_color,
                 start_pos=(point.x, point.y),
@@ -261,7 +282,7 @@ class Pen(GameObject):
                 width=self.draw_font
             )
 
-    def update(self, current_pos):
+    def update(self, current_pos): #append new points to the list
         self.points.append(Point(*current_pos))
 
 
@@ -278,9 +299,12 @@ class Cube(GameObject):
         start_pos_y = self.start_pos.y
         end_pos_x = self.end_pos.x
         end_pos_y = self.end_pos.y
+        #measure distanse between center and endpoint
         distance = ((start_pos_x-end_pos_x)**2+(end_pos_y-start_pos_y)**2)**0.5
-        start_pos_x=start_pos_x-(distance*(2**0.5))/2
+        #finding start pos
+        start_pos_x=start_pos_x-(distance*(2**0.5))/2 
         start_pos_y=start_pos_y-(distance*(2**0.5))/2
+        #draw
         pygame.draw.rect(
             SCREEN,
             self.draw_color,
@@ -294,11 +318,11 @@ class Cube(GameObject):
             width=self.draw_font,
         )
 
-    def update(self, current_pos):
+    def update(self, current_pos):#update endposes
         self.end_pos.x, self.end_pos.y = current_pos
 
 
-class EquilateralTriangle(GameObject):
+class EquilateralTriangle(GameObject): # drawing equileiteral
     def __init__(self, start_pos,draw_font,draw_color, *args, **kwargs):
         self.start_pos = Point(*start_pos)
         self.end_pos = Point(*start_pos)
@@ -306,12 +330,13 @@ class EquilateralTriangle(GameObject):
         self.draw_color=draw_color
 
     def draw(self):
-        pygame.draw.polygon(SCREEN,self.draw_color,FindVerticesOfEquilateralTriangle(self.start_pos.x,self.start_pos.y,self.end_pos.x,self.end_pos.y),draw_font)
-    def update(self, current_pos):
+        #draw shape using function FindVerticesOfEquilateralTriangle
+        pygame.draw.polygon(SCREEN,self.draw_color,FindVerticesOfEquilateralTriangle(self.start_pos.x,self.start_pos.y,self.end_pos.x,self.end_pos.y),self.draw_font)
+    def update(self, current_pos): #updtae endposes
         self.end_pos.x,self.end_pos.y = current_pos
 
 
-class RightTriangle(GameObject):
+class RightTriangle(GameObject):#draw right triangle
     def __init__(self, start_pos,draw_font,draw_color, *args, **kwargs):
         self.start_pos = Point(*start_pos)
         self.end_pos = Point(*start_pos)
@@ -321,12 +346,13 @@ class RightTriangle(GameObject):
     def draw(self):
         third_pos_x=self.end_pos.x
         third_pos_y=self.start_pos.y
+        #draw triangle by three points ,third points x is endposes x and third points y is start pos y
         pygame.draw.polygon(SCREEN,self.draw_color,[(self.start_pos.x,self.start_pos.y),(self.end_pos.x,self.end_pos.y),(third_pos_x,third_pos_y)],self.draw_font)
 
-    def update(self, current_pos):
+    def update(self, current_pos): # updating endposes
         self.end_pos.x,self.end_pos.y = current_pos
 
-class Rectangle(GameObject):
+class Rectangle(GameObject):# drawing rectangle
     def __init__(self, start_pos,draw_font,draw_color, *args, **kwargs):
         self.start_pos = Point(*start_pos)
         self.end_pos = Point(*start_pos)
@@ -334,12 +360,14 @@ class Rectangle(GameObject):
         self.draw_color=draw_color
 
     def draw(self):
+        #its starting points have the minimum x and y
+        #ending points have maximum
         start_pos_x =min(self.start_pos.x, self.end_pos.x)
         start_pos_y = min(self.start_pos.y, self.end_pos.y)
 
         end_pos_x = max(self.start_pos.x, self.end_pos.x)
         end_pos_y = max(self.start_pos.y, self.end_pos.y)
-
+        #draw a rect
         pygame.draw.rect(
             SCREEN,
             self.draw_color,
@@ -351,12 +379,12 @@ class Rectangle(GameObject):
             width=self.draw_font,
         )
 
-    def update(self, current_pos):
+    def update(self, current_pos): # update endposes
         self.end_pos.x,self.end_pos.y = current_pos
 
 
 
-class Rombus(GameObject):
+class Rombus(GameObject): #drawing rombus
     def __init__(self, start_pos,draw_font,draw_color, *args, **kwargs):
         self.start_pos = Point(*start_pos)
         self.end_pos = Point(*start_pos)
@@ -369,35 +397,35 @@ class Rombus(GameObject):
 
         end_pos_x = self.end_pos.x
         end_pos_y = self.end_pos.y
-        distance = ((start_pos_x-end_pos_x)**2+(end_pos_y-start_pos_y)**2)**0.5
-        next_pos_x=start_pos_x-(distance*(2**0.5))/2
-        next_pos_y=start_pos_y-(distance*(2**0.5))/2
-
+        #just upper and lower vertexes have same xwhith starting point,left and right ones have the same y cordinate as start pos y
+        # finding other cordinates of points
         pygame.draw.polygon(SCREEN,self.draw_color,
-                            [(start_pos_x,abs(start_pos_y-(start_pos_y-end_pos_y)) ),
-                             (abs( start_pos_x+(start_pos_x-end_pos_x)),start_pos_y),
-                             (start_pos_x,abs(start_pos_y+(start_pos_y-end_pos_y)) ),
-                             (abs( start_pos_x-(start_pos_x-end_pos_x)),start_pos_y)],
-                             draw_font)
+                            [(start_pos_x,start_pos_y-(start_pos_y-end_pos_y) ),
+                             (start_pos_x+(start_pos_x-end_pos_x),start_pos_y),
+                             (start_pos_x,start_pos_y+(start_pos_y-end_pos_y) ),
+                             (start_pos_x-(start_pos_x-end_pos_x),start_pos_y)],
+                             self.draw_font)
 
 
 
-    def update(self, current_pos):
+    def update(self, current_pos): # update endposes
         self.end_pos.x,self.end_pos.y = current_pos
 
-class Circle(GameObject):
+class Circle(GameObject):# draw circle
     def __init__(self,start_pos,draw_font,draw_color,*arg,**kwarg):
         self.start_pos = Point(*start_pos)
         self.end_pos = Point(*start_pos)
         self.draw_font=draw_font
         self.draw_color=draw_color
     def draw(self):
+        #start pos is the center of circle 
         center_x=self.start_pos.x
         center_y=self.start_pos.y
         end_pos_x=self.end_pos.x
         end_pos_y=self.end_pos.y
-        print(23)
+        #finding radius by knowing center and endpoint cordinates
         radius=(abs(end_pos_x-center_x)**2+abs(end_pos_y-center_y)**2)**0.5
+        #draw circle
         pygame.draw.circle(
             SCREEN,
             self.draw_color,
@@ -405,16 +433,21 @@ class Circle(GameObject):
             radius,
             self.draw_font
         )
-    def update(self, current_pos):
+    def update(self, current_pos):#update endposes
         self.end_pos.x,self.end_pos.y=current_pos
 def main():
     running = True
-    global draw_font
+    #font,it will be changed
     draw_font=5
+    #starting color
     draw_color=WHITE
+    #create new object in gameobject class
     game_object = GameObject()
     active_obj = game_object
+
     current_shape = Pen # current_shape()
+
+    #creating objects in all button classes
     button_pen=ButtonPen()
     button_eraser = ButtonEraser()
     button_rect = ButtonRect()
@@ -424,6 +457,7 @@ def main():
     button_equileiteral=ButtonEquileiteral()
     button_right_triangle=ButtonRightTriangle()
 
+    #creating list of objects with buttons in it
     objects = [
         (button_pen,0,draw_color),
         (button_rect,0,draw_color),
@@ -436,6 +470,7 @@ def main():
     ]
 
     while running:
+        #fill screen with black
         SCREEN.fill(BLACK)
 
         for event in pygame.event.get():
@@ -457,7 +492,7 @@ def main():
                     draw_color= WHITE
                 elif button_eraser.rect.collidepoint(event.pos):
                     current_shape = Pen
-                    draw_color=(0,0,0)
+                    draw_color=BLACK
                 elif button_right_triangle.rect.collidepoint(event.pos):
                     current_shape = RightTriangle
                     draw_color=WHITE
@@ -490,7 +525,13 @@ def main():
                     draw_color=(0,0,255)
                 
 
-        for obj in objects:
+        for obj in objects[8:]:
+            obj[0].draw_font=obj[1]
+            obj[0].draw_color=obj[2]
+            obj[0].draw()
+
+
+        for obj in objects[:8]:
             obj[0].draw_font=obj[1]
             obj[0].draw_color=obj[2]
             obj[0].draw()
