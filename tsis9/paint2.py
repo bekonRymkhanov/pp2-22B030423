@@ -472,12 +472,12 @@ def main():
     while running:
         #fill screen with black
         SCREEN.fill(BLACK)
-
+        #getting events
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT:#quitting if button quit pressed
                 running = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:#if mouse was pressed,check collisions with buttons
                 if button_rect.rect.collidepoint(event.pos):
                     current_shape = Rectangle
                     draw_color= WHITE
@@ -502,17 +502,17 @@ def main():
                 elif button_equileiteral.rect.collidepoint(event.pos):
                     current_shape = EquilateralTriangle
                     draw_color=WHITE
-                else:
+                else:    #else append new object to the list
                     active_obj = current_shape(start_pos=pygame.mouse.get_pos(),draw_font=draw_font,draw_color=draw_color)
                     objects.append((active_obj,draw_font,draw_color))
 
-            if event.type == pygame.MOUSEMOTION:
+            if event.type == pygame.MOUSEMOTION:#if mouse is pressed and moving,updtate current pos and give objs endpos
                 active_obj.update(current_pos=pygame.mouse.get_pos())
 
-            if event.type == pygame.MOUSEBUTTONUP:
+            if event.type == pygame.MOUSEBUTTONUP: #create new obj in mother class
                 active_obj = game_object
             
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN: #changing font,color by keys
                 if event.key == pygame.K_UP:
                     draw_font=min(100,draw_font+3)
                 if event.key == pygame.K_DOWN:
@@ -525,18 +525,18 @@ def main():
                     draw_color=(0,0,255)
                 
 
-        for obj in objects[8:]:
+        for obj in objects[8:]:#drawing objects
             obj[0].draw_font=obj[1]
             obj[0].draw_color=obj[2]
             obj[0].draw()
 
 
-        for obj in objects[:8]:
+        for obj in objects[:8]:#drawing buttons
             obj[0].draw_font=obj[1]
             obj[0].draw_color=obj[2]
             obj[0].draw()
 
-        clock.tick(45)
+        clock.tick(100) #fps
         pygame.display.flip()
 
 

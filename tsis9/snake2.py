@@ -136,7 +136,8 @@ while runned:
     walls.draw()
     #score fonts and display
     level=len(snake.snakebody)//5+1
-    x=5+level/2
+    #speed increasing by level
+    x=5+level//2
     level_see=all_font.render(f"level: {level}",True,(255,255,255))
     score_see=all_font.render(f"score: {len(snake.snakebody)}",True,(255,255,255))
     SCREEN.blit(level_see,(0,0))

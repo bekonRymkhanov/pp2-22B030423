@@ -34,12 +34,15 @@ font = pygame.font.SysFont("Verdana", 60)
 font_small = pygame.font.SysFont("Verdana", 40)
 game_over = font.render("Game Over", True, col_BLACK)
 
-class coin_generation(pygame.sprite.Sprite):
+class coin_generation(pygame.sprite.Sprite): #coin class
     def __init__(self):
         super().__init__()
+        #random weight
         self.weight = random.randint(1,3)
+        #loading image of coin
         self.img = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/coin.png'), (60//self.weight,60//self.weight))
         self.rect = self.img.get_rect()
+        #random position for coin
         self.rect.center = (random.randint(150, display_width-150), random.randint(150, display_height-60))
 
         
@@ -48,6 +51,7 @@ class coin_generation(pygame.sprite.Sprite):
         pass
 
     def nextCoin(self):
+        #random position and weight
         self.rect.center = (random.randint(150, display_width-200), random.randint(150, display_height-60))
         self.weight = random.randint(1,3)
         self.img = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/coin.png'), (60//self.weight,60//self.weight))
@@ -60,16 +64,18 @@ class coin_generation(pygame.sprite.Sprite):
 class ownMovement(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        #load image
         self.car = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/redcar.png'), (50,70))
         self.rect = self.car.get_rect()
         self.rect.center = (600, 600)
+        #speed
         self.own_speed=5
 
     def check(self):
         pass
 
     def move(self):
-        key = pygame.key.get_pressed()
+        key = pygame.key.get_pressed() #get events when key pressed and change car position
         if(self.rect.bottom < display_height):
             if key[K_DOWN]:
                 self.rect.move_ip(0, 5)
@@ -83,25 +89,30 @@ class ownMovement(pygame.sprite.Sprite):
             if key[K_LEFT]:
                 self.rect.move_ip(-5, 0)
 
-    def render(self,surface):
+    def render(self,surface):   #paste car image to screen
         surface.blit(self.car, self.rect)
 
 class enemyMovement(pygame.sprite.Sprite):
         def __init__(self):
             super().__init__()
+            #load enemy car image
             self.car = pygame.transform.scale(pygame.image.load('C:/Users/User/Desktop/python/images/greencar.png'), (45, 90))
             self.rect = self.car.get_rect()
+            #random position of enemy in x cordinate ,but y cordinate is 0
             self.rect.center = (random.randint(138, display_width-138),0)
         def check(self):
             pass
         def move(self):
+            # move car by own speed
             self.rect.move_ip(0, current_Own.own_speed)
+            #if it passes screen,change its y cordinates and random x cordinates
             if(self.rect.bottom>display_width):
                 self.rect.top = 0
                 self.rect.center = (random.randint(138, display_width-138),0)
         def render(self, surface):
             surface.blit(self.car, self.rect)
 
+#create obj and take them to classes
 current_Own = ownMovement()
 current_Enemy = enemyMovement()
 current_Coin = coin_generation()
@@ -117,19 +128,21 @@ global collected
 collected = 0
 coins = 0
 running=True
+#create event that increases speed by time
 INC_SPEED = pygame.USEREVENT + 1
-pygame.time.set_timer(INC_SPEED, 1000)
+pygame.time.set_timer(INC_SPEED,1000)
 
 while running:
+    #increase speed if 1000 mlseconds pass and check quit event
     for event in pygame.event.get():
         if event.type == INC_SPEED:
-            if current_Own.own_speed > 5:
+            if current_Own.own_speed > 10:
                 pass
             else:
                 current_Own.own_speed += 2
         if event.type==QUIT:
             running=False
-
+    #display screen and score
     display.blit(bg, (0, 0))
     scores = font_small.render(str(coins), True, col_BLACK)
     scores_collected = font_small.render(str(collected), True, col_BLACK)
