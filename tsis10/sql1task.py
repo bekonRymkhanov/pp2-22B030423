@@ -1,5 +1,5 @@
 import psycopg2
-import re
+import csv
 def main():
     connection = psycopg2.connect(
         host="localhost",
@@ -58,18 +58,12 @@ def main():
         elif a == 7:
             path=input("give path,NOT RELATIVE")
 
-            with open(f"{path}",'r') as file:
-                patt='\n'
-                content=file.read()
-                for cont in list(re.split(patt,content)):
-                    conte=list(re.split(";",cont))
-                    if conte[0]=='':
-                        continue
-                    print(conte)
-                    with connection.cursor() as cursor:
+            with open(path, newline='') as csvfile:
+                spamreader = csv.reader(csvfile, delimiter=';', quotechar='|',)
+                for row in spamreader:
+                     with connection.cursor() as cursor:
                         cursor.execute(f"""INSERT INTO phonebook(first_name,phone_number)
-                        VALUES ('{conte[0]}','{conte[1]}')""")
-
+                        VALUES ('{row[0]}','{row[1]}')""")
     connection.close()
 
 if __name__ == "__main__":
