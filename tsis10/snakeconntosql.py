@@ -196,7 +196,7 @@ while runned:
             food.y=random.randint(0,WIDTH//BLOCK-1)
             food.timer=timer_food()
 
-    level=score2//5+1
+    level=score2//10+1
     if initial_level!=level:
         dx=0
         dy=0

@@ -1,5 +1,2 @@
-import csv
-with open('sometable.csv', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=';', quotechar='|',)
-    for row in spamreader:
-        print(row[0])
+t = list(tuple(map(int,input().split())) for r in range(int(input('enter no of rows : '))))  
+print(t)
