@@ -135,6 +135,7 @@ snake=Snake()
 food=Food()
 walls=Walls()
 name=''
+stoped=False
 
 while not inserted:
 
@@ -164,7 +165,7 @@ while runned:
     if find_user(user_name)==0 and firsttime==True:
         score=score2
     elif  find_user(user_name)!=0 and firsttime==True:
-        score2=find_user(user_name)
+        score2=find_user(user_name)//10*10
         score=score2
         firsttime=False
     
@@ -175,14 +176,24 @@ while runned:
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_UP:
                 dx,dy=0,-1
+                stoped=False
             elif event.key==pygame.K_RIGHT:
                 dx,dy=1,0
+                stoped=False
             elif event.key==pygame.K_LEFT:
                 dx,dy=-1,0
+                stoped=False
             elif event.key==pygame.K_DOWN:
                 dx,dy=0,1
+                stoped=False
+            elif event.key==pygame.K_SPACE:
+                dx,dy=0,0
+                stoped=True
     #give dx dy to snake class
-    snake.move(dx,dy)
+    if stoped:
+        pass
+    else:
+        snake.move(dx,dy)
 
     for i in range(1,len(snake.snakebody)):#check collision with itself
         if snake.collision(snake.snakebody[i].x,snake.snakebody[i].y):

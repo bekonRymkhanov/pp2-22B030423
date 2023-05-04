@@ -51,7 +51,7 @@ def main():
                 cursor.execute("TRUNCATE TABLE phonebook;")
         elif a ==6:
             mode_change=input("1-by alphabetical,2-by inverse alphabetical")
-            if mode_change==1:
+            if mode_change=='1':
                 mode='ASC'
             else:
                 mode='DESC'
