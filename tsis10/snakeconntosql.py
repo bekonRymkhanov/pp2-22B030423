@@ -118,6 +118,12 @@ class Walls:
                pygame.draw.rect(SCREEN,(200,200,200),pygame.Rect(i,self.y,BLOCK-5,BLOCK-5))
                self.wall_list.append(Point(i/BLOCK,self.y//BLOCK))
 
+class Bomb:
+    def __init__(self):
+        self.x=random.randint(0,HEIGHT//BLOCK-1)
+        self.y=random.randint(0,WIDTH//BLOCK-1)
+    def draw(self):
+        pygame.draw.circle(SCREEN,(150,255,255),(self.x*BLOCK+BLOCK//2,self.y*BLOCK+BLOCK//2),BLOCK//2)
 
 
 runned,inserted=True,False
@@ -130,17 +136,23 @@ level=1
 score2=0
 saved_lenght=0
 SCREEN=pygame.display.set_mode((HEIGHT,WIDTH))
-all_font=pygame.font.SysFont("Italic",50)
+font = pygame.font.SysFont("Verdana", 30)
+font2 = pygame.font.SysFont("Verdana", 60)
+button=font2.render("exit",True,(200,200,0))
+game_over = font.render("Game Over", True, (0,0,0))
+music_bomb=pygame.mixer.Sound("C:/Users/User/Desktop/python/music/crash.mp3")
+music_apple=pygame.mixer.Sound("C:/Users/User/Desktop/python/music/Apple_Bite-Simon_Craggs-1683647397.mp3")
 snake=Snake()
 food=Food()
 walls=Walls()
+bomb=Bomb()
 name=''
 stoped=False
 
 while not inserted:
 
     SCREEN.fill((0,0,0))
-    insert_text=all_font.render("your name:",True,(255,255,255))
+    insert_text=font.render("your name:",True,(255,255,255))
     SCREEN.blit(insert_text,(0,0))
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
@@ -154,7 +166,7 @@ while not inserted:
             else:
                 key_name = pygame.key.name(event.key)
                 name+=f'{key_name}'
-    nametext=all_font.render(f"{name}",True,(255,255,255))
+    nametext=font.render(f"{name}",True,(255,255,255))
     SCREEN.blit(nametext,(200,0))
             
 
@@ -217,19 +229,21 @@ while runned:
     #draw all
 
     food.draw()
-
+    bomb.draw()
     snake.draw()
     walls.draw(level)
+    
     #score fonts and display
 
     #speed increasing by level
     x=5+level//3
-    level_see=all_font.render(f"level: {level}",True,(255,255,255))
-    score_see=all_font.render(f"score: {score2}",True,(255,255,255))
+    level_see=font.render(f"level: {level}",True,(255,255,255))
+    score_see=font.render(f"score: {score2}",True,(255,255,255))
     SCREEN.blit(level_see,(0,0))
     SCREEN.blit(score_see,(HEIGHT-150,0))
     #check collision of snake with food
     if snake.collision(food.x,food.y):
+        music_apple.play()
         for weight in range(food.weight):
             snake.snakebody.append(Point(food.x,food.y))
         food.x=random.randint(0,HEIGHT//BLOCK-1)
@@ -240,6 +254,30 @@ while runned:
         if food.collision():
             food.x=random.randint(0,HEIGHT//BLOCK-1)
             food.y=random.randint(0,WIDTH//BLOCK-1)
+
+    if snake.collision(bomb.x,bomb.y):
+        music_bomb.play()
+        snake.snakebody.pop()
+        while len(snake.snakebody)==0:
+            SCREEN.fill((255,0,0))
+            SCREEN.blit(game_over, SCREEN.get_rect().center)
+            pygame.draw.rect(SCREEN,(0,255,0),pygame.Rect(200,200,50,50),0)
+            #SCREEN.blit(SCREEN)
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type==pygame.MOUSEBUTTONDOWN and (pygame.mouse.get_pos()[0]>200 and pygame.mouse.get_pos()[0]<250) and (pygame.mouse.get_pos()[1]>200 and pygame.mouse.get_pos()[1]<250) :
+                    pygame.quit()
+                if event.type==pygame.QUIT:
+                    pygame.quit()
+
+        bomb.x=random.randint(0,HEIGHT//BLOCK-1)
+        bomb.y=random.randint(0,WIDTH//BLOCK-1)
+        for i in range(len(walls.wall_list)):
+            for j in range(len(snake.snakebody)):
+                if (snake.snakebody[j].x==bomb.x and snake.snakebody[j].y==bomb.y)or (walls.wall_list[i].x==bomb.x or walls.wall_list[i].y==bomb.y):
+                    bomb.x=random.randint(0,HEIGHT//BLOCK-1)
+                    bomb.y=random.randint(0,WIDTH//BLOCK-1)
+
 
     for i in range(len(walls.wall_list)):#check collision with walls and snakehead
         if snake.collision(walls.wall_list[i].x,walls.wall_list[i].y):
