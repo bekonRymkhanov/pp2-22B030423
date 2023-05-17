@@ -468,7 +468,7 @@ def main():
         (button_rombus,0,draw_color),
         (button_equileiteral,0,draw_color)
     ]
-
+    
     while running:
         #fill screen with black
         SCREEN.fill(BLACK)
